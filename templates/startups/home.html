@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="container">
+        <h1>Découvrez l'innovation marocaine.<br>Connectez-vous à son avenir.</h1>
+        <p>Rencontrez les startups innovantes marocaines et créez des connexions stratégiques qui transforment le Maroc.</p>
+        
+        <div style="margin-top: 30px;">
+            <a href="#startups-list" class="btn btn-primary">Découvrir les startups</a>
+            {% if not user.is_authenticated %}
+            <a href="{% url 'signup' %}" class="btn btn-outline" ... >Exposer ma startup</a>
+            {% endif %}
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-item">
+                <h3>1.5M+</h3>
+                <span>MAD collectés</span>
+            </div>
+            <div class="stat-item">
+                <h3>50+</h3>
+                <span>Projets financés</span>
+            </div>
+            <div class="stat-item">
+                <h3>1,200+</h3>
+                <span>Investisseurs actifs</span>
+            </div>
+            <div class="stat-item">
+                <h3>92%</h3>
+                <span>Taux de succès</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="steps-section">
+    <div class="container">
+        <h2 class="section-title" style="text-align: center;">Comment ça marche</h2>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h4>Création du profil</h4>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Créez votre profil détaillé avec votre vision pour attirer les partenaires.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h4>Découverte</h4>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Explorez notre réseau de startups innovantes par secteur.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h4>Contact sécurisé</h4>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Établissez des connexions stratégiques en toute sécurité.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container" id="startups-list" style="padding-bottom: 60px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 60px;">
+        <h2 class="section-title" style="margin-bottom: 0;">Startups en vedette</h2>
+        <a href="#" style="color: var(--primary); font-weight: 600;">Voir tout →</a>
+    </div>
+
+    <div class="cards-grid">
+        {% for startup in startups %}
+        <article class="startup-card">
+            <div class="card-img-wrapper" style="height: 200px; overflow: hidden;">
+                {% if startup.logo %}
+                    <img src="{{ startup.logo.url }}" alt="{{ startup.nom }}" class="card-img">
+                {% else %}
+                    <div style="width:100%; height:100%; background:#e0e7ff; display:flex; align-items:center; justify-content:center; color:var(--primary);">Pas d'image</div>
+                {% endif %}
+            </div>
+
+            <div class="card-body">
+                <div class="card-meta">
+                    <span>{{ startup.ville }}</span>
+                    <span>{{ startup.date_ajout|date:"d M Y" }}</span>
+                </div>
+                <h3 class="card-title">{{ startup.nom }}</h3>
+                <p class="card-desc">{{ startup.description|truncatechars:80 }}</p>
+                
+                <a href="{% url 'startup_detail' startup.pk %}" class="btn btn-secondary" style="width: 100%; text-align: center; border-radius: 8px;">Voir le profil</a>
+            </div>
+        </article>
+        {% empty %}
+            <p style="grid-column: 1/-1; text-align: center; padding: 40px;">Aucune startup inscrite pour le moment.</p>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

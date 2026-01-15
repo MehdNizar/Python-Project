@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="detail-header">
+    <div class="container">
+        <span style="background: #e0e7ff; color: var(--primary); padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">Startup</span>
+        <h1 style="font-size: 2.5rem; margin-top: 10px;">{{ startup.nom }}</h1>
+        <p style="color: var(--text-light);"><span style="margin-right: 15px;">📍 {{ startup.ville }}</span> 📅 Membre depuis {{ startup.date_ajout|date:"Y" }}</p>
+    </div>
+</div>
+
+<div class="container detail-content" style="margin-bottom: 60px;">
+    <div>
+        {% if startup.logo %}
+            <img src="{{ startup.logo.url }}" alt="{{ startup.nom }}" style="width: 100%; height: auto; border-radius: var(--radius); margin-bottom: 30px; box-shadow: var(--shadow);">
+        {% endif %}
+
+        <h3 style="font-size: 1.5rem; margin-bottom: 15px;">À propos</h3>
+        <p style="white-space: pre-line; color: #4b5563;">{{ startup.description }}</p>
+    </div>
+
+    <aside>
+        <div class="info-box">
+            <h3 style="margin-bottom: 20px;">Contacter la startup</h3>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="font-size: 0.8rem; color: #9ca3af;">Gérant</label>
+                <div style="font-weight: 600;">{{ startup.gerant.username }}</div>
+            </div>
+
+            {% if user.is_authenticated %}
+                <ul style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                    <li style="display: flex; align-items: center; gap: 10px;">
+                        📧 <a href="mailto:{{ startup.email }}" style="color: var(--primary);">{{ startup.email }}</a>
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 10px;">
+                        📱 {{ startup.telephone }}
+                    </li>
+                    {% if startup.site_web %}
+                    <li style="display: flex; align-items: center; gap: 10px;">
+                        🌐 <a href="{{ startup.site_web }}" target="_blank" style="color: var(--primary);">Visiter le site web</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            {% else %}
+                <div style="background: #fff7ed; padding: 15px; border-radius: 8px; color: #c2410c; font-size: 0.9rem; margin-top: 20px;">
+                    🔒 Connectez-vous pour voir les coordonnées complètes.
+                </div>
+                <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary" style="width: 100%; margin-top: 15px; text-align: center;">Se connecter</a>
+            {% endif %}
+        </div>
+    </aside>
+</div>
+
+{% endblock %}

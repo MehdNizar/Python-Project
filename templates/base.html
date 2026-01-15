@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moukawala 2030</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="{% url 'home' %}" class="logo">
+                <span style="background:var(--primary-gradient); width:30px; height:30px; border-radius:8px;"></span>
+                Moukawala 2030
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Startups</a></li>
+                <li><a href="#">Comment ça marche</a></li> <li><a href="#">À propos</a></li>
+            </ul>
+
+            <div class="d-flex align-items-center gap-3">
+    {% if user.is_authenticated %}
+        <a href="{% url 'add_startup' %}" class="btn btn-primary">
+            Exposer ma startup
+        </a>
+
+        <span class="text-muted">Bonjour, <strong>{{ user.username }}</strong></span>
+
+        <form action="{% url 'logout' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-link text-dark text-decoration-none p-0" style="font-weight: 500;">
+                Se déconnecter
+            </button>
+        </form>
+
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-link text-dark text-decoration-none">
+            Se connecter
+        </a>
+        <a href="{% url 'signup' %}" class="btn btn-primary">
+            Inscription
+        </a>
+    {% endif %}
+</div>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <footer style="margin-top: auto; padding: 40px 0; text-align: center; background: #fff; border-top: 1px solid #eee;">
+        <div class="container">
+            <p style="color: var(--text-light);">&copy; 2030 Moukawala. Vision Digital Morocco.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
