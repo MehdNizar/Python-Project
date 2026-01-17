@@ -7,3 +7,4 @@ class UserProfileAdmin(admin.ModelAdmin):
     list_filter = ('type_utilisateur',)
     search_fields = ('user__username', 'ville')
     
+    
