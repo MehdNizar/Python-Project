@@ -10,11 +10,19 @@ class RegisterForm(UserCreationForm):
         widget=forms.RadioSelect,
         label="Je suis un"
     )
+<<<<<<< HEAD
 
     class Meta:
         model = User
         fields = ['username', 'email']
 
+=======
+    
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+    
+>>>>>>> e1914e1 (Sauvegarde locale avant synchronisation)
     def save(self, commit=True):
         user = super().save(commit=commit)
         if commit:
@@ -23,3 +31,7 @@ class RegisterForm(UserCreationForm):
                 type_utilisateur=self.cleaned_data['type_utilisateur']
             )
         return user
+<<<<<<< HEAD
+=======
+    
+>>>>>>> e1914e1 (Sauvegarde locale avant synchronisation)
