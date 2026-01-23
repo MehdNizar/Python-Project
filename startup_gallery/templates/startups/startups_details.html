@@ -1,0 +1,212 @@
+<style>
+    .detail-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border: 5px solid;
+        border-image: linear-gradient(45deg, #C1272D, #FFD700, #006233) 1;
+    }
+    
+    .detail-header {
+        background: linear-gradient(135deg, #C1272D 0%, #006233 100%);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    .detail-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .detail-header .ville {
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+    
+    .detail-logo {
+        width: 100%;
+        max-height: 400px;
+        object-fit: cover;
+        border-bottom: 5px solid #FFD700;
+    }
+    
+    .detail-content {
+        padding: 2rem;
+    }
+    
+    .section {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid #f0f0f0;
+    }
+    
+    .section:last-child {
+        border-bottom: none;
+    }
+    
+    .section h2 {
+        color: #C1272D;
+        margin-bottom: 1rem;
+        font-size: 1.8rem;
+        border-left: 5px solid #FFD700;
+        padding-left: 1rem;
+    }
+    
+    .section p {
+        color: #666;
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+    
+    .contact-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .contact-item {
+        background: linear-gradient(135deg, rgba(193, 39, 45, 0.05), rgba(0, 98, 51, 0.05));
+        padding: 1.5rem;
+        border-radius: 10px;
+        border-left: 4px solid #C1272D;
+    }
+    
+    .contact-item strong {
+        color: #C1272D;
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+    
+    .contact-item a {
+        color: #006233;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    .contact-item a:hover {
+        color: #C1272D;
+    }
+    
+    .comments-section {
+        background: #f9f9f9;
+        padding: 2rem;
+        border-radius: 10px;
+    }
+    
+    .comment-form textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 1rem;
+        resize: vertical;
+        min-height: 100px;
+    }
+    
+    .comment-form textarea:focus {
+        outline: none;
+        border-color: #C1272D;
+    }
+    
+    .btn-comment {
+        margin-top: 1rem;
+        padding: 0.8rem 2rem;
+        background: linear-gradient(90deg, #C1272D 0%, #006233 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    
+    .btn-comment:hover {
+        transform: scale(1.05);
+    }
+    
+    .btn-back {
+        display: inline-block;
+        margin-bottom: 2rem;
+        padding: 0.8rem 1.5rem;
+        background: #006233;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: background 0.3s;
+    }
+    
+    .btn-back:hover {
+        background: #C1272D;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'home' %}" class="btn-back">← Retour à l'accueil</a>
+
+<div class="detail-container">
+    <div class="detail-header">
+        <h1>{{ startup.nom }}</h1>
+        <p class="ville">⚲ {{ startup.ville }}</p>
+    </div>
+    
+    <img src="{{ startup.logo.url }}" alt="{{ startup.nom }}" class="detail-logo">
+    
+    <div class="detail-content">
+        <div class="section">
+            <h2>■ Description</h2>
+            <p>{{ startup.description }}</p>
+        </div>
+        
+        <div class="section">
+            <h2>▪ Informations de Contact</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>✉ Email</strong>
+                    <a href="mailto:{{ startup.email }}">{{ startup.email }}</a>
+                </div>
+                
+                <div class="contact-item">
+                    <strong>☎ Téléphone</strong>
+                    <p>{{ startup.telephone }}</p>
+                </div>
+                
+                {% if startup.site_web %}
+                <div class="contact-item">
+                    <strong>⌂ Site Web</strong>
+                    <a href="{{ startup.site_web }}" target="_blank">Visiter le site</a>
+                </div>
+                {% endif %}
+                
+                <div class="contact-item">
+                    <strong>● Gérant</strong>
+                    <p>{{ startup.gerant.username }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>▪ Laissez un commentaire</h2>
+            <div class="comments-section">
+                <form method="post" class="comment-form">
+                    {% csrf_token %}
+                    <textarea name="comment" placeholder="Partagez votre avis sur cette startup..." required></textarea>
+                    <button type="submit" class="btn-comment">Envoyer le commentaire</button>
+                </form>
+                
+                <p style="margin-top: 1rem; color: #888; font-style: italic;">
+                    * Les commentaires seront bientôt affichés ici
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
