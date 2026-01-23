@@ -1,0 +1,145 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Inscription - STARTIKA{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-container {
+        max-width: 500px;
+        margin: 3rem auto;
+        background: white;
+        padding: 3rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border-top: 5px solid #006233;
+    }
+    
+    .auth-container h2 {
+        color: #006233;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+        display: block;
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-group input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border 0.3s;
+    }
+    
+    .form-group input:focus {
+        outline: none;
+        border-color: #006233;
+    }
+    
+    .radio-group {
+        display: flex;
+        gap: 2rem;
+        margin-top: 0.5rem;
+    }
+    
+    .radio-group label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: normal;
+    }
+    
+    .btn-submit {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(90deg, #006233 0%, #C1272D 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    
+    .btn-submit:hover {
+        transform: scale(1.02);
+    }
+    
+    .auth-links {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #666;
+    }
+    
+    .auth-links a {
+        color: #006233;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    .errorlist {
+        color: #C1272D;
+        list-style: none;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <h2>📝 Inscription</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_username">Nom d'utilisateur</label>
+            {{ form.username }}
+            {{ form.username.errors }}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_email">Email</label>
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_password1">Mot de passe</label>
+            {{ form.password1 }}
+            {{ form.password1.errors }}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_password2">Confirmer le mot de passe</label>
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+        </div>
+        
+        <div class="form-group">
+            <label>Je suis un :</label>
+            <div class="radio-group">
+                {{ form.type_utilisateur }}
+            </div>
+            {{ form.type_utilisateur.errors }}
+        </div>
+        
+        <button type="submit" class="btn-submit">S'inscrire</button>
+    </form>
+    
+    <div class="auth-links">
+        <p>Déjà un compte ? <a href="{% url 'login' %}">Connectez-vous ici</a></p>
+    </div>
+</div>
+{% endblock %}
