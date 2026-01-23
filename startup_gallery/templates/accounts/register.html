@@ -1,4 +1,8 @@
+{% extends 'base/base.html' %}
 
+{% block title %}Inscription - STARTIKA{% endblock %}
+
+{% block extra_css %}
 <style>
     .auth-container {
         max-width: 500px;
@@ -59,6 +63,7 @@
         width: 100%;
         padding: 1rem;
         background: linear-gradient(90deg, #006233 0%, #C1272D 100%);
+
         color: white;
         border: none;
         border-radius: 8px;
@@ -138,5 +143,7 @@
         <p>Déjà un compte ? <a href="{% url 'login' %}">Connectez-vous ici</a></p>
     </div>
 </div>
+{% endblock %}
+
 
 
