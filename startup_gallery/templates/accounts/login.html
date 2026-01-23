@@ -1,4 +1,8 @@
+{% extends 'base/base.html' %}
 
+{% block title %}Connexion - STARTIKA{% endblock %}
+
+{% block extra_css %}
 <style>
     .auth-container {
         max-width: 500px;
@@ -108,5 +112,7 @@
         <p>Pas encore de compte ? <a href="{% url 'register' %}">Inscrivez-vous ici</a></p>
     </div>
 </div>
+{% endblock %}
+
 
 
